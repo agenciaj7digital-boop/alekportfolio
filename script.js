@@ -21,6 +21,13 @@ document.querySelectorAll('.video-frame').forEach((frame) => {
       }
     });
 
+    if (!video.dataset.loaded) {
+      const source = video.querySelector('source[data-src]');
+      source.src = source.dataset.src;
+      video.load();
+      video.dataset.loaded = 'true';
+    }
+
     if (video.paused) {
       video.play();
       frame.classList.add('playing');
