@@ -1,0 +1,255 @@
+.hero-visual {
+  --hero-rx: 0deg;
+  --hero-ry: 0deg;
+  --hero-scroll: 0;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 3% -5% 0 -8%;
+  z-index: -2;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 68% 42%, rgba(255, 37, 146, .28), transparent 25%),
+    radial-gradient(circle at 61% 47%, rgba(118, 88, 255, .2), transparent 43%);
+  filter: blur(30px);
+  opacity: calc(.75 + var(--hero-scroll) * .2);
+  transform: translate3d(0, calc(var(--hero-scroll) * -18px), 0) scale(calc(.96 + var(--hero-scroll) * .06));
+  transition: opacity .25s ease;
+}
+
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 430px;
+  aspect-ratio: 1;
+  right: -5%;
+  top: 7%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.14) 0 1%, transparent 2%),
+    repeating-radial-gradient(circle, transparent 0 33px, rgba(255,255,255,.055) 34px 35px, transparent 36px 50px);
+  border: 1px solid rgba(255,255,255,.08);
+  opacity: .72;
+  animation: portal-grid-spin 34s linear infinite;
+}
+
+.hero-visual .orb-back {
+  transform: translate3d(calc(var(--scene-x, 0) * 12px), calc(var(--scene-y, 0) * 10px - var(--hero-scroll) * 14px), 30px) scale(calc(1 + var(--hero-scroll) * .05));
+  transition: box-shadow .2s ease, filter .2s ease;
+  box-shadow:
+    0 0 calc(90px + var(--portal-energy, 0) * 60px) rgba(186, 46, 189, calc(.35 + var(--portal-energy, 0) * .18)),
+    inset 0 0 60px rgba(255,255,255,.08);
+}
+
+.hero-visual .orb-front {
+  transform: translate3d(calc(var(--scene-x, 0) * -20px), calc(var(--scene-y, 0) * -16px + var(--hero-scroll) * 18px), 85px);
+}
+
+.hero-visual .glass-card {
+  transform: translate3d(calc(var(--scene-x, 0) * -28px), calc(var(--scene-y, 0) * -20px - var(--hero-scroll) * 12px), 120px)
+    rotateX(calc(var(--scene-y, 0) * -5deg))
+    rotateY(calc(var(--scene-x, 0) * 7deg))
+    rotateZ(-8deg);
+  transition: transform .16s ease-out, box-shadow .2s ease;
+  box-shadow: 0 34px 90px rgba(0,0,0,.52), 0 0 42px rgba(197,51,207,.12);
+}
+
+.hero-visual .scene-hud-top {
+  transform: translate3d(calc(var(--scene-x, 0) * -10px), calc(var(--scene-y, 0) * -8px), 70px);
+}
+
+.hero-visual .scene-hud-bottom {
+  transform: translate3d(calc(var(--scene-x, 0) * 10px), calc(var(--scene-y, 0) * 8px), 65px);
+}
+
+.scene-wave {
+  position: absolute;
+  z-index: 4;
+  left: 9%;
+  top: 46%;
+  width: 76%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transform: translate3d(calc(var(--scene-x, 0) * -16px), calc(var(--scene-y, 0) * -12px), 75px) rotate(-4deg);
+  opacity: .45;
+  pointer-events: none;
+}
+.scene-wave i {
+  flex: 1;
+  height: var(--wave-height, 20%);
+  min-width: 2px;
+  background: linear-gradient(to bottom, transparent, #fb3ca0 22%, #a55cff 78%, transparent);
+  box-shadow: 0 0 10px rgba(255,48,151,.42);
+  animation: wave-pulse 1.55s ease-in-out infinite alternate;
+  animation-delay: var(--wave-delay, 0s);
+}
+
+.portal-ring {
+  position: absolute;
+  z-index: 2;
+  width: 390px;
+  aspect-ratio: 1;
+  top: 2%;
+  right: -1%;
+  border: 14px solid rgba(15, 13, 23, .86);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.12),
+    inset 0 0 32px rgba(150,60,255,.28),
+    0 0 0 1px rgba(255,255,255,.08),
+    0 0 70px rgba(174,40,214,.26);
+  transform: translate3d(calc(var(--scene-x, 0) * 6px), calc(var(--scene-y, 0) * 5px - var(--hero-scroll) * 10px), 18px) rotate(calc(var(--hero-scroll) * 5deg));
+  pointer-events: none;
+}
+.portal-ring::before,
+.portal-ring::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  inset: 14px;
+  border: 1px dashed rgba(255,255,255,.17);
+}
+.portal-ring::after {
+  inset: 39px;
+  border-style: solid;
+  border-width: 1px 0;
+  border-color: rgba(255,72,169,.3);
+  animation: portal-grid-spin 18s linear infinite reverse;
+}
+
+.hero-preview {
+  position: absolute;
+  z-index: 7;
+  width: 150px;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(8,7,12,.7);
+  box-shadow: 0 18px 45px rgba(0,0,0,.48), 0 0 24px rgba(177,55,214,.15);
+  backdrop-filter: blur(10px);
+  transform-style: preserve-3d;
+  transition: width .35s ease, border-color .35s ease, filter .35s ease, box-shadow .35s ease;
+}
+.hero-preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: .72;
+  filter: saturate(.8) contrast(1.08);
+  transition: opacity .3s ease, filter .3s ease, transform .5s ease;
+}
+.hero-preview::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.75);
+  text-shadow: 0 1px 7px #000;
+}
+.hero-preview:hover {
+  width: 205px;
+  z-index: 12;
+  border-color: rgba(255,255,255,.5);
+  box-shadow: 0 26px 70px rgba(0,0,0,.58), 0 0 35px rgba(243,56,159,.28);
+}
+.hero-preview:hover video { opacity: 1; filter: saturate(1.15) contrast(1.06); transform: scale(1.035); }
+.hero-preview-one {
+  top: 20%;
+  left: 0;
+  transform: translate3d(calc(var(--scene-x, 0) * -22px), calc(var(--scene-y, 0) * -17px - var(--hero-scroll) * 8px), 115px) rotate(-7deg);
+}
+.hero-preview-two {
+  top: 56%;
+  right: 3%;
+  transform: translate3d(calc(var(--scene-x, 0) * 26px), calc(var(--scene-y, 0) * 18px + var(--hero-scroll) * 10px), 130px) rotate(6deg);
+}
+.hero-preview-three {
+  bottom: 5%;
+  left: 31%;
+  width: 125px;
+  transform: translate3d(calc(var(--scene-x, 0) * -30px), calc(var(--scene-y, 0) * 22px + var(--hero-scroll) * 16px), 150px) rotate(-2deg);
+}
+
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+}
+.hero-particles i {
+  position: absolute;
+  width: var(--particle-size, 5px);
+  height: var(--particle-size, 5px);
+  border-radius: 1px;
+  background: linear-gradient(135deg, #ff4b9e, #7a5cff);
+  box-shadow: 0 0 14px rgba(255,64,157,.6);
+  animation: particle-drift var(--particle-time, 7s) ease-in-out infinite alternate;
+  animation-delay: var(--particle-delay, 0s);
+}
+
+@keyframes wave-pulse {
+  from { transform: scaleY(.4); opacity: .45; }
+  to { transform: scaleY(1.1); opacity: 1; }
+}
+@keyframes portal-grid-spin { to { transform: rotate(360deg); } }
+@keyframes particle-drift {
+  from { transform: translate3d(0,0,0) rotate(0); }
+  to { transform: translate3d(var(--particle-x, 16px), var(--particle-y, -20px), 0) rotate(150deg); }
+}
+
+@media (max-width: 1180px) {
+  .hero-preview { width: 125px; }
+  .hero-preview:hover { width: 165px; }
+  .portal-ring { width: 330px; }
+}
+
+@media (max-width: 1000px) {
+  .hero-visual {
+    display: block;
+    height: min(510px, 72vw);
+    margin-top: 55px;
+    width: min(720px, 100%);
+    justify-self: center;
+  }
+  .hero { padding-bottom: 115px; }
+  .hero-preview { display: none; }
+  .portal-ring { right: 8%; }
+}
+
+@media (max-width: 680px) {
+  .hero-visual {
+    height: 370px;
+    margin-top: 38px;
+    transform: scale(.92);
+    transform-origin: center top;
+  }
+  .portal-ring { width: 265px; right: 0; top: 0; }
+  .hero-visual .orb-back { width: 240px; height: 240px; right: 2%; }
+  .hero-visual .orb-front { width: 125px; height: 125px; }
+  .hero-visual .glass-card { width: 235px; height: 145px; padding: 21px; top: 31%; }
+  .hero-visual .glass-card strong { font-size: 20px; }
+  .scene-wave { width: 82%; left: 6%; }
+  .scene-hud-bottom { bottom: 0; }
+}
+
+@media (pointer: coarse) {
+  .hero-visual { --scene-x: 0 !important; --scene-y: 0 !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-wave i,
+  .portal-ring::after,
+  .hero-particles i,
+  .hero-visual::after { animation: none !important; }
+}
