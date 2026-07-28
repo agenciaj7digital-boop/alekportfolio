@@ -136,24 +136,24 @@ form.addEventListener("submit", (event) => {
   window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 });
 
-// Cena imersiva reconstruída em camadas nativas
-const immersiveScene = document.querySelector(".camera-scene");
+// Microinterações da arte aprovada
+const approvedScene = document.querySelector(".approved-scene");
 const immersiveHero = document.querySelector(".hero");
 
-if (immersiveScene && immersiveHero && !reducedMotion) {
+if (approvedScene && immersiveHero && !reducedMotion) {
   let targetX = 0;
   let targetY = 0;
   let currentX = 0;
   let currentY = 0;
 
-  const renderScene = () => {
-    currentX += (targetX - currentX) * .07;
-    currentY += (targetY - currentY) * .07;
-    immersiveScene.style.setProperty("--scene-x", currentX.toFixed(3));
-    immersiveScene.style.setProperty("--scene-y", currentY.toFixed(3));
-    requestAnimationFrame(renderScene);
+  const renderApprovedScene = () => {
+    currentX += (targetX - currentX) * .065;
+    currentY += (targetY - currentY) * .065;
+    approvedScene.style.setProperty("--scene-x", currentX.toFixed(3));
+    approvedScene.style.setProperty("--scene-y", currentY.toFixed(3));
+    requestAnimationFrame(renderApprovedScene);
   };
-  renderScene();
+  renderApprovedScene();
 
   immersiveHero.addEventListener("pointermove", (event) => {
     if (event.pointerType === "touch") return;
@@ -167,12 +167,12 @@ if (immersiveScene && immersiveHero && !reducedMotion) {
     targetY = 0;
   });
 
-  const updateSceneScroll = () => {
+  const updateApprovedScroll = () => {
     const bounds = immersiveHero.getBoundingClientRect();
     const progress = Math.min(1, Math.max(0, -bounds.top / Math.max(bounds.height * .75, 1)));
-    immersiveScene.style.setProperty("--scene-scroll", progress.toFixed(3));
+    approvedScene.style.setProperty("--scene-scroll", progress.toFixed(3));
   };
 
-  updateSceneScroll();
-  window.addEventListener("scroll", updateSceneScroll, { passive: true });
+  updateApprovedScroll();
+  window.addEventListener("scroll", updateApprovedScroll, { passive: true });
 }
