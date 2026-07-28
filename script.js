@@ -141,30 +141,19 @@ const approvedScene = document.querySelector(".approved-scene");
 const immersiveHero = document.querySelector(".hero");
 
 if (approvedScene && immersiveHero && !reducedMotion) {
-  let targetX = 0;
-  let targetY = 0;
-  let currentX = 0;
-  let currentY = 0;
-
-  const renderApprovedScene = () => {
-    currentX += (targetX - currentX) * .065;
-    currentY += (targetY - currentY) * .065;
-    approvedScene.style.setProperty("--scene-x", currentX.toFixed(3));
-    approvedScene.style.setProperty("--scene-y", currentY.toFixed(3));
-    requestAnimationFrame(renderApprovedScene);
-  };
-  renderApprovedScene();
-
-  immersiveHero.addEventListener("pointermove", (event) => {
+  const updateApprovedPointer = (event) => {
     if (event.pointerType === "touch") return;
     const bounds = immersiveHero.getBoundingClientRect();
-    targetX = ((event.clientX - bounds.left) / bounds.width - .5) * 2;
-    targetY = ((event.clientY - bounds.top) / bounds.height - .5) * 2;
-  }, { passive: true });
+    const x = Math.min(1, Math.max(-1, ((event.clientX - bounds.left) / bounds.width - .5) * 2));
+    const y = Math.min(1, Math.max(-1, ((event.clientY - bounds.top) / bounds.height - .5) * 2));
+    approvedScene.style.setProperty("--scene-x", x.toFixed(3));
+    approvedScene.style.setProperty("--scene-y", y.toFixed(3));
+  };
 
+  immersiveHero.addEventListener("pointermove", updateApprovedPointer, { passive: true });
   immersiveHero.addEventListener("pointerleave", () => {
-    targetX = 0;
-    targetY = 0;
+    approvedScene.style.setProperty("--scene-x", "0");
+    approvedScene.style.setProperty("--scene-y", "0");
   });
 
   const updateApprovedScroll = () => {
