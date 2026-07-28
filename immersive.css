@@ -113,13 +113,13 @@
   transform-style: preserve-3d;
   transform:
     translate3d(
-      calc(var(--scene-x) * 14px),
-      calc(var(--scene-y) * 8px - var(--scene-scroll) * 12px),
+      calc(var(--scene-x) * 20px),
+      calc(var(--scene-y) * 12px - var(--scene-scroll) * 14px),
       0
     )
-    rotateX(calc(var(--scene-y) * -1.5deg))
-    rotateY(calc(var(--scene-x) * 2.2deg));
-  transition: transform .09s linear;
+    rotateX(calc(var(--scene-y) * -2deg))
+    rotateY(calc(var(--scene-x) * 3deg));
+  transition: transform .18s cubic-bezier(.2,.8,.2,1);
 }
 
 .approved-scene-art {
