@@ -83,6 +83,17 @@
   transform: translateY(-7px) scale(1.035);
 }
 
+.clients .brand-ford img,
+.clients .brand-seara img {
+  opacity: .86;
+  filter: grayscale(1) saturate(0) brightness(1.08) contrast(1.24);
+}
+
+.clients .brand-ford:hover img,
+.clients .brand-seara:hover img {
+  filter: none;
+}
+
 .clients .brand-volvo:hover img {
   filter: grayscale(1) brightness(0) invert(1);
 }
