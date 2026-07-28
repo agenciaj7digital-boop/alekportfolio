@@ -184,11 +184,15 @@
 }
 
 .portal-ring {
+  position: absolute;
   z-index: 3;
   width: min(40vw, 610px);
+  aspect-ratio: 1;
   top: 9%;
   right: 4%;
   border-width: 12px;
+  border-style: solid;
+  border-radius: 50%;
   border-color: rgba(10, 7, 18, .58);
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,.1),
@@ -197,38 +201,81 @@
     0 0 calc(65px + var(--portal-energy, 0) * 38px) rgba(188,40,222,.22);
   mix-blend-mode: screen;
   opacity: .56;
+  transform:
+    translate3d(
+      calc(var(--scene-x, 0) * 6px),
+      calc(var(--scene-y, 0) * 5px - var(--hero-scroll) * 10px),
+      18px
+    )
+    rotate(calc(var(--hero-scroll) * 5deg));
+  pointer-events: none;
+}
+
+.portal-ring::before,
+.portal-ring::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
 }
 
 .portal-ring::before {
   inset: 19px;
+  border-style: dashed;
+  border-width: 1px;
   border-color: rgba(255,255,255,.16);
 }
 
 .portal-ring::after {
   inset: 51px;
+  border-style: solid;
+  border-width: 1px 0;
   border-color: rgba(255,72,169,.26);
+  animation: portal-grid-spin 18s linear infinite reverse;
 }
 
 .scene-wave {
+  position: absolute;
   z-index: 6;
   left: -2%;
   top: 48%;
   width: 86%;
   height: 58px;
+  display: flex;
+  align-items: center;
   gap: 3px;
   opacity: .48;
   mix-blend-mode: screen;
+  transform: translate3d(calc(var(--scene-x, 0) * -16px), calc(var(--scene-y, 0) * -12px), 75px) rotate(-4deg);
+  pointer-events: none;
+}
+
+.scene-wave i {
+  flex: 1;
+  min-width: 2px;
+  height: var(--wave-height, 20%);
+  background: linear-gradient(to bottom, transparent, #fb3ca0 22%, #a55cff 78%, transparent);
+  box-shadow: 0 0 10px rgba(255,48,151,.42);
+  animation: wave-pulse 1.55s ease-in-out infinite alternate;
+  animation-delay: var(--wave-delay, 0s);
 }
 
 .hero-preview {
+  position: absolute;
   z-index: 9;
   width: clamp(122px, 9.2vw, 176px);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
   border-color: rgba(255,255,255,.22);
+  border-style: solid;
+  border-width: 1px;
   border-radius: 3px;
   background: rgba(8, 7, 15, .64);
   box-shadow:
     0 22px 54px rgba(0,0,0,.5),
     0 0 28px rgba(184,49,225,.2);
+  backdrop-filter: blur(10px);
+  transform-style: preserve-3d;
+  transition: width .35s ease, border-color .35s ease, filter .35s ease, box-shadow .35s ease;
 }
 
 .hero-preview::before {
@@ -243,8 +290,26 @@
 }
 
 .hero-preview video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   opacity: .84;
   filter: saturate(1.08) contrast(1.08);
+  transition: opacity .3s ease, filter .3s ease, transform .5s ease;
+}
+
+.hero-preview::after {
+  content: attr(data-label);
+  position: absolute;
+  z-index: 3;
+  left: 10px;
+  bottom: 8px;
+  color: rgba(255,255,255,.78);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-shadow: 0 1px 7px #000;
 }
 
 .hero-preview:hover {
@@ -259,25 +324,37 @@
 .hero-preview-one {
   top: 16%;
   left: 9%;
+  transform: translate3d(calc(var(--scene-x, 0) * -22px), calc(var(--scene-y, 0) * -17px - var(--hero-scroll) * 8px), 115px) rotate(-7deg);
 }
 
 .hero-preview-two {
   top: 58%;
   right: 7%;
+  transform: translate3d(calc(var(--scene-x, 0) * 26px), calc(var(--scene-y, 0) * 18px + var(--hero-scroll) * 10px), 130px) rotate(6deg);
 }
 
 .hero-preview-three {
   bottom: 7%;
   left: 36%;
+  transform: translate3d(calc(var(--scene-x, 0) * -30px), calc(var(--scene-y, 0) * 22px + var(--hero-scroll) * 16px), 150px) rotate(-2deg);
 }
 
 .hero-particles {
+  position: absolute;
+  inset: 0;
   z-index: 10;
+  pointer-events: none;
 }
 
 .hero-particles i {
+  position: absolute;
+  width: var(--particle-size, 5px);
+  height: var(--particle-size, 5px);
+  border-radius: 1px;
   background: linear-gradient(135deg, #ff4b9e, #875cff);
   box-shadow: 0 0 18px rgba(255,64,157,.68);
+  animation: particle-drift var(--particle-time, 7s) ease-in-out infinite alternate;
+  animation-delay: var(--particle-delay, 0s);
 }
 
 .scroll-note {
@@ -294,6 +371,16 @@
 
 @keyframes portal-grid-spin {
   to { transform: rotate(360deg); }
+}
+
+@keyframes wave-pulse {
+  from { transform: scaleY(.4); opacity: .45; }
+  to { transform: scaleY(1.1); opacity: 1; }
+}
+
+@keyframes particle-drift {
+  from { transform: translate3d(0,0,0) rotate(0); }
+  to { transform: translate3d(var(--particle-x, 16px), var(--particle-y, -20px), 0) rotate(150deg); }
 }
 
 @media (min-width: 1500px) {
