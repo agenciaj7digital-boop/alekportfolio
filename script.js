@@ -139,7 +139,7 @@ form.addEventListener("submit", (event) => {
 // Experiência imersiva do hero
 const immersiveStyles = document.createElement("link");
 immersiveStyles.rel = "stylesheet";
-immersiveStyles.href = "immersive.css?v=camera-20260728";
+immersiveStyles.href = "immersive.css?v=camera-20260728b";
 document.head.appendChild(immersiveStyles);
 
 const hero = document.querySelector(".hero");
