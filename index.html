@@ -26,7 +26,7 @@
       <a href="#clientes">Clientes</a>
       <a href="#processo">O que criamos</a>
     </nav>
-    <button class="header-cta" type="button" data-open-brief>Criar meu projeto <span>↗</span></button>
+    <button class="header-cta" type="button" data-open-brief>Quero uma produção 3D <span>↗</span></button>
   </header>
 
   <main>
@@ -36,8 +36,8 @@
         <h1>Coloque a sua marca<br><span>em outra dimensão.</span></h1>
         <p class="hero-text">Transformamos produtos em experiências visuais épicas — criadas para interromper o scroll, despertar desejo e fazer sua marca ser lembrada.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#portfolio">Assista ao nosso portfólio <span>↓</span></a>
-          <button class="text-link" type="button" data-open-brief>Quero uma produção 3D <span>↗</span></button>
+          <button class="button button-primary button-production" type="button" data-open-brief>Quero uma produção 3D <span>↗</span></button>
+          <a class="text-link" href="#portfolio">Assista ao nosso portfólio <span>↓</span></a>
         </div>
       </div>
 
@@ -45,7 +45,7 @@
         <div class="scene-hud scene-hud-top"><span>RENDER</span><strong>∞</strong></div>
         <div class="scene-orbit orbit-one"></div>
         <div class="scene-orbit orbit-two"></div>
-        <div class="orb orb-back"></div>
+        <div class="orb orb-back"><span>ALEK</span><i></i></div>
         <div class="orb orb-front"></div>
         <div class="glass-card">
           <small>REALIDADE / IMAGINAÇÃO</small>
@@ -186,19 +186,19 @@
       </div>
       <div class="services reveal">
         <div><span>01</span><strong>Filmes de produto em 3D</strong><i>↗</i></div>
-        <div><span>02</span><strong>Campanhas com CGI</strong><i>↗</i></div>
+        <div><span>02</span><strong>Campanhas de alto impacto em 3D</strong><i>↗</i></div>
         <div><span>03</span><strong>Produções com IA</strong><i>↗</i></div>
       </div>
     </section>
 
     <section class="cta-section section" id="contato">
       <div class="cta-grid" aria-hidden="true"></div>
-      <div class="cta-glow" aria-hidden="true"></div>
+      <div class="cta-glow" aria-hidden="true"><span>ALEK</span><i></i></div>
       <div class="cta-content reveal">
         <p class="eyebrow"><span></span> VAMOS CRIAR?</p>
         <h2>A próxima cena<br>épica pode ser<br><span>da sua marca.</span></h2>
         <p>Conte sua ideia para a gente. O resto, nós transformamos em algo impossível de passar despercebido.</p>
-        <button class="button button-light" type="button" data-open-brief>Solicitar uma proposta <span>↗</span></button>
+        <button class="button button-light" type="button" data-open-brief>Quero uma produção 3D <span>↗</span></button>
       </div>
       <div class="cta-code" aria-hidden="true">
         <span>IDEA INPUT</span>
@@ -230,6 +230,10 @@
           <input type="text" name="nome" autocomplete="name" required>
         </label>
         <label>
+          <span>Nome da empresa</span>
+          <input type="text" name="empresa" autocomplete="organization" required>
+        </label>
+        <label>
           <span>Email</span>
           <input type="email" name="email" autocomplete="email" required>
         </label>
@@ -237,15 +241,9 @@
           <span>WhatsApp</span>
           <input type="tel" name="whatsapp" autocomplete="tel" inputmode="tel" required>
         </label>
-        <label>
-          <span>Tipo de vídeo</span>
-          <select name="tipo" required>
-            <option value="" selected disabled>Selecione uma opção</option>
-            <option>Filme de produto em 3D</option>
-            <option>Campanha com CGI</option>
-            <option>Produção com IA</option>
-            <option>Ainda não sei</option>
-          </select>
+        <label class="form-wide">
+          <span>Instagram da empresa</span>
+          <input type="text" name="instagram" autocomplete="off" placeholder="@suaempresa" required>
         </label>
         <label class="form-wide">
           <span>Detalhes do que você deseja produzir</span>

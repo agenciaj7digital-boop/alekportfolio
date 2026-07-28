@@ -125,9 +125,10 @@ form.addEventListener("submit", (event) => {
     "Olá! Quero solicitar uma proposta de produção 3D.",
     "",
     `Nome: ${data.get("nome")}`,
+    `Empresa: ${data.get("empresa")}`,
     `E-mail: ${data.get("email")}`,
     `WhatsApp: ${data.get("whatsapp")}`,
-    `Tipo de vídeo: ${data.get("tipo")}`,
+    `Instagram da empresa: ${data.get("instagram")}`,
     `Detalhes do projeto: ${data.get("detalhes")}`
   ].join("\n");
 
