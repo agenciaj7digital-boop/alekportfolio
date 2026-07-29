@@ -88,8 +88,12 @@ document.querySelectorAll(".video-frame").forEach((frame) => {
 
 const dialog = document.querySelector("#brief-dialog");
 const form = document.querySelector("#brief-form");
+const formSubmit = form.querySelector(".form-submit");
+const formStatus = document.querySelector("#form-status");
 const openButtons = document.querySelectorAll("[data-open-brief]");
 const closeButton = document.querySelector("[data-close-brief]");
+const sheetsEndpoint = "https://script.google.com/macros/s/AKfycbyAK3DvuuQhBo1d31DY98jAbcZ3u2l-NyQc1b0AtuMpm83QUy3EclKpT9fzGSMNsgOw/exec";
+const submitLabel = formSubmit.innerHTML;
 
 const openDialog = () => {
   if (typeof dialog.showModal === "function") {
@@ -118,22 +122,35 @@ dialog.addEventListener("click", (event) => {
 
 dialog.addEventListener("close", () => document.body.classList.remove("modal-open"));
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const data = new FormData(form);
-  const message = [
-    "Olá! Quero solicitar uma proposta de produção 3D.",
-    "",
-    `Nome: ${data.get("nome")}`,
-    `Empresa: ${data.get("empresa")}`,
-    `E-mail: ${data.get("email")}`,
-    `WhatsApp: ${data.get("whatsapp")}`,
-    `Instagram da empresa: ${data.get("instagram")}`,
-    `Detalhes do projeto: ${data.get("detalhes")}`
-  ].join("\n");
+  if (!form.reportValidity()) return;
 
-  const whatsappUrl = `https://wa.me/5551990181065?text=${encodeURIComponent(message)}`;
-  window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+  formSubmit.disabled = true;
+  formSubmit.textContent = "Enviando...";
+  formStatus.textContent = "";
+  formStatus.className = "form-status";
+
+  try {
+    const payload = new URLSearchParams(new FormData(form));
+
+    await fetch(sheetsEndpoint, {
+      method: "POST",
+      mode: "no-cors",
+      credentials: "omit",
+      body: payload
+    });
+
+    form.reset();
+    formStatus.textContent = "Briefing enviado com sucesso. Nossa equipe entrará em contato.";
+    formStatus.classList.add("success");
+  } catch {
+    formStatus.textContent = "Não foi possível enviar agora. Tente novamente em alguns instantes.";
+    formStatus.classList.add("error");
+  } finally {
+    formSubmit.disabled = false;
+    formSubmit.innerHTML = submitLabel;
+  }
 });
 
 // Microinterações da arte aprovada
