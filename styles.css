@@ -716,8 +716,29 @@ footer img { width: 90px; }
 .brief-form textarea { resize: vertical; min-height: 118px; }
 .brief-form input:focus, .brief-form select:focus, .brief-form textarea:focus { border-color: var(--purple); background: rgba(118, 88, 255, .055); }
 .brief-form select option { color: #111; }
+.form-honeypot {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .form-wide { grid-column: 1 / -1; }
 .form-submit { grid-column: 1 / -1; justify-self: start; margin-top: 6px; }
+.form-submit:disabled { cursor: wait; opacity: .72; transform: none; }
+.form-status {
+  grid-column: 1 / -1;
+  min-height: 20px;
+  margin: -3px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.form-status:empty { display: none; }
+.form-status.success { color: #8be0ba; }
+.form-status.error { color: #ff829b; }
 
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .85s ease, transform .85s ease; }
 .reveal.visible { opacity: 1; transform: none; }
