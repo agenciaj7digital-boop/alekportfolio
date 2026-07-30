@@ -122,6 +122,21 @@ dialog.addEventListener("click", (event) => {
 
 dialog.addEventListener("close", () => document.body.classList.remove("modal-open"));
 
+const whatsappFloat = document.querySelector("[data-whatsapp-float]");
+
+whatsappFloat?.addEventListener("click", () => {
+  if (typeof window.gtag === "function") {
+    window.gtag("event", "click_whatsapp", {
+      event_category: "contact",
+      event_label: "floating_button"
+    });
+  }
+
+  if (typeof window.fbq === "function") {
+    window.fbq("trackCustom", "WhatsAppClick");
+  }
+});
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (!form.reportValidity()) return;
