@@ -1,5 +1,42 @@
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const header = document.querySelector(".site-header");
+const trackEvent = (name, parameters = {}) => {
+  if (typeof window.gtag === "function") {
+    window.gtag("event", name, parameters);
+  }
+};
+
+const consentStorageKey = "alek_analytics_consent_v1";
+const consentBanner = document.querySelector("[data-consent-banner]");
+const consentAccept = document.querySelector("[data-consent-accept]");
+const consentReject = document.querySelector("[data-consent-reject]");
+
+let savedConsent = null;
+try {
+  savedConsent = localStorage.getItem(consentStorageKey);
+} catch {}
+
+if (consentBanner && !savedConsent) {
+  consentBanner.hidden = false;
+}
+
+const updateConsent = (value) => {
+  window.gtag?.("consent", "update", {
+    analytics_storage: value,
+    ad_storage: value,
+    ad_user_data: value,
+    ad_personalization: value
+  });
+
+  try {
+    localStorage.setItem(consentStorageKey, value);
+  } catch {}
+
+  if (consentBanner) consentBanner.hidden = true;
+};
+
+consentAccept?.addEventListener("click", () => updateConsent("granted"));
+consentReject?.addEventListener("click", () => updateConsent("denied"));
 
 const updateHeader = () => header.classList.toggle("scrolled", window.scrollY > 24);
 updateHeader();
@@ -69,6 +106,14 @@ document.querySelectorAll(".video-frame").forEach((frame) => {
       try {
         await video.play();
         frame.classList.add("playing");
+        if (!video.dataset.analyticsStarted) {
+          const title = frame.closest(".video-card")?.querySelector(".video-meta strong")?.textContent?.trim();
+          trackEvent("video_play", {
+            video_title: title || "portfolio",
+            content_type: "portfolio"
+          });
+          video.dataset.analyticsStarted = "true";
+        }
       } catch {
         frame.classList.remove("playing");
       }
@@ -107,7 +152,13 @@ const closeDialog = () => {
   document.body.classList.remove("modal-open");
 };
 
-openButtons.forEach((button) => button.addEventListener("click", openDialog));
+openButtons.forEach((button) => button.addEventListener("click", () => {
+  trackEvent("form_open", {
+    form_id: "brief-form",
+    button_text: button.textContent.trim()
+  });
+  openDialog();
+}));
 closeButton.addEventListener("click", closeDialog);
 
 dialog.addEventListener("click", (event) => {
@@ -125,12 +176,10 @@ dialog.addEventListener("close", () => document.body.classList.remove("modal-ope
 const whatsappFloat = document.querySelector("[data-whatsapp-float]");
 
 whatsappFloat?.addEventListener("click", () => {
-  if (typeof window.gtag === "function") {
-    window.gtag("event", "click_whatsapp", {
-      event_category: "contact",
-      event_label: "floating_button"
-    });
-  }
+  trackEvent("click_whatsapp", {
+    event_category: "contact",
+    event_label: "floating_button"
+  });
 
   if (typeof window.fbq === "function") {
     window.fbq("trackCustom", "WhatsAppClick");
@@ -159,6 +208,10 @@ form.addEventListener("submit", async (event) => {
     form.reset();
     formStatus.textContent = "Briefing enviado com sucesso. Nossa equipe entrará em contato.";
     formStatus.classList.add("success");
+    trackEvent("generate_lead", {
+      form_id: "brief-form",
+      form_name: "briefing_3d"
+    });
   } catch {
     formStatus.textContent = "Não foi possível enviar agora. Tente novamente em alguns instantes.";
     formStatus.classList.add("error");
