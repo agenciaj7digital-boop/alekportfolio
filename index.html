@@ -26,6 +26,27 @@
     });
     window.gtag("js", new Date());
     window.gtag("config", "G-ZNXSTPH0WX", { anonymize_ip: true });
+
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = true;
+      n.version = "2.0";
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = true;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+
+    window.fbq("consent", alekConsent === "granted" ? "grant" : "revoke");
+    window.fbq("init", "270350415939769");
+    window.fbq("track", "PageView");
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZNXSTPH0WX"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -315,7 +336,7 @@
   <aside class="consent-banner" data-consent-banner aria-label="Preferências de privacidade" hidden>
     <div>
       <strong>Sua privacidade importa</strong>
-      <p>Usamos cookies de medição para entender o desempenho do site e melhorar sua experiência.</p>
+      <p>Usamos cookies de medição e marketing para melhorar sua experiência e nossas campanhas.</p>
     </div>
     <div class="consent-actions">
       <button type="button" class="consent-reject" data-consent-reject>Recusar</button>
@@ -337,6 +358,6 @@
     <span>Fale com a gente</span>
   </a>
 
-  <script type="module" src="script.js?v=analytics-20260730a"></script>
+  <script type="module" src="script.js?v=meta-pixel-20260730b"></script>
 </body>
 </html>
