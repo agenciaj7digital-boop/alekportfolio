@@ -780,6 +780,45 @@ footer img { width: 90px; }
 .whatsapp-float:focus-visible { outline: 3px solid rgba(255, 255, 255, .9); outline-offset: 4px; }
 body.modal-open .whatsapp-float { opacity: 0; pointer-events: none; transform: translateY(12px); }
 
+.consent-banner {
+  position: fixed;
+  z-index: 30;
+  left: max(24px, env(safe-area-inset-left));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  width: min(460px, calc(100vw - 48px));
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 18px;
+  color: #fff;
+  background: rgba(13, 12, 19, .96);
+  border: 1px solid rgba(255, 255, 255, .18);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .52);
+  backdrop-filter: blur(18px);
+}
+.consent-banner[hidden] { display: none; }
+.consent-banner strong { display: block; margin-bottom: 6px; font-size: 15px; }
+.consent-banner p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.consent-actions { display: flex; gap: 8px; }
+.consent-actions button {
+  appearance: none;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  color: #fff;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.consent-actions .consent-accept {
+  border-color: transparent;
+  background: linear-gradient(135deg, #7658ff, #ec2a8c);
+}
+.consent-actions button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .85s ease, transform .85s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 
@@ -864,6 +903,16 @@ body.modal-open .whatsapp-float { opacity: 0; pointer-events: none; transform: t
   }
   .whatsapp-float span { display: none; }
   .whatsapp-float svg { width: 27px; height: 27px; }
+  .consent-banner {
+    left: max(12px, env(safe-area-inset-left));
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(86px, calc(env(safe-area-inset-bottom) + 76px));
+    width: auto;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 17px;
+  }
+  .consent-actions { justify-content: flex-end; }
 }
 
 @media (pointer: coarse) {
