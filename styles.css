@@ -740,9 +740,53 @@ footer img { width: 90px; }
 .form-status.success { color: #8be0ba; }
 .form-status.error { color: #ff829b; }
 
+.whatsapp-float {
+  position: fixed;
+  z-index: 19;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 0 20px 0 16px;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(135deg, #27d968, #18ad52);
+  box-shadow: 0 16px 40px rgba(13, 120, 55, .34), 0 0 0 1px rgba(0, 0, 0, .08) inset;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  isolation: isolate;
+  transition: transform .25s ease, filter .25s ease, opacity .25s ease, box-shadow .25s ease;
+}
+.whatsapp-float::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -1px;
+  border: 1px solid rgba(54, 231, 116, .52);
+  border-radius: inherit;
+  animation: whatsapp-pulse 2.8s ease-out infinite;
+}
+.whatsapp-float svg { width: 25px; height: 25px; fill: currentColor; flex: 0 0 auto; }
+.whatsapp-float:hover {
+  color: #fff;
+  filter: brightness(1.08);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 48px rgba(13, 120, 55, .44), 0 0 0 1px rgba(0, 0, 0, .08) inset;
+}
+.whatsapp-float:focus-visible { outline: 3px solid rgba(255, 255, 255, .9); outline-offset: 4px; }
+body.modal-open .whatsapp-float { opacity: 0; pointer-events: none; transform: translateY(12px); }
+
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .85s ease, transform .85s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 
+@keyframes whatsapp-pulse {
+  0% { opacity: .65; transform: scale(1); }
+  72%, 100% { opacity: 0; transform: scale(1.16, 1.35); }
+}
 @keyframes orbit-float {
   0%, 100% { transform: rotateX(67deg) rotateZ(-14deg) translateY(0); }
   50% { transform: rotateX(67deg) rotateZ(-9deg) translateY(-10px); }
@@ -810,6 +854,16 @@ footer img { width: 90px; }
   .brief-form { padding: 38px 24px 32px; grid-template-columns: 1fr; }
   .form-wide, .form-submit { grid-column: 1; }
   .form-submit { width: 100%; }
+  .whatsapp-float {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    width: 58px;
+    min-height: 58px;
+    padding: 0;
+    justify-content: center;
+  }
+  .whatsapp-float span { display: none; }
+  .whatsapp-float svg { width: 27px; height: 27px; }
 }
 
 @media (pointer: coarse) {
