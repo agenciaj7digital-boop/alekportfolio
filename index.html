@@ -6,10 +6,32 @@
   <meta name="theme-color" content="#07070a">
   <meta name="description" content="Produções em 3D e IA que transformam produtos em experiências visuais épicas.">
   <title>Alek — Vídeos 3D que colocam sua marca em outra dimensão</title>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+
+    let alekConsent = "denied";
+    try {
+      if (localStorage.getItem("alek_analytics_consent_v1") === "granted") {
+        alekConsent = "granted";
+      }
+    } catch {}
+
+    window.gtag("consent", "default", {
+      analytics_storage: alekConsent,
+      ad_storage: alekConsent,
+      ad_user_data: alekConsent,
+      ad_personalization: alekConsent,
+      wait_for_update: 500
+    });
+    window.gtag("js", new Date());
+    window.gtag("config", "G-ZNXSTPH0WX", { anonymize_ip: true });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZNXSTPH0WX"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=analytics-20260730a">
   <link rel="stylesheet" href="immersive.css?v=clean-camera-20260728a">
   <link rel="stylesheet" href="clients-logos.css?v=original-logos-20260728b">
 </head>
@@ -290,6 +312,17 @@
     </div>
   </dialog>
 
+  <aside class="consent-banner" data-consent-banner aria-label="Preferências de privacidade" hidden>
+    <div>
+      <strong>Sua privacidade importa</strong>
+      <p>Usamos cookies de medição para entender o desempenho do site e melhorar sua experiência.</p>
+    </div>
+    <div class="consent-actions">
+      <button type="button" class="consent-reject" data-consent-reject>Recusar</button>
+      <button type="button" class="consent-accept" data-consent-accept>Aceitar</button>
+    </div>
+  </aside>
+
   <a
     class="whatsapp-float"
     href="https://wa.me/555193189533?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20gostaria%20de%20conversar%20sobre%20uma%20produ%C3%A7%C3%A3o%203D."
@@ -304,6 +337,6 @@
     <span>Fale com a gente</span>
   </a>
 
-  <script type="module" src="script.js?v=whatsapp-float-20260729a"></script>
+  <script type="module" src="script.js?v=analytics-20260730a"></script>
 </body>
 </html>
