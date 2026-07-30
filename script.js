@@ -28,6 +28,8 @@ const updateConsent = (value) => {
     ad_personalization: value
   });
 
+  window.fbq?.("consent", value === "granted" ? "grant" : "revoke");
+
   try {
     localStorage.setItem(consentStorageKey, value);
   } catch {}
@@ -211,6 +213,9 @@ form.addEventListener("submit", async (event) => {
     trackEvent("generate_lead", {
       form_id: "brief-form",
       form_name: "briefing_3d"
+    });
+    window.fbq?.("track", "Lead", {
+      content_name: "briefing_3d"
     });
   } catch {
     formStatus.textContent = "Não foi possível enviar agora. Tente novamente em alguns instantes.";
